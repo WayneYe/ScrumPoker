@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <!--<script src="javascripts/jquery-1.7.2.js" type="text/javascript" charset="utf-8"></script>-->
+    <style type="text/css" media="all">
+      #c
+      {
+        width: 400px;
+        height: 200px;
+        border: 1px solid red;
+        margin: 0 auto;
+      }
+      #d
+      {
+        width: 40px;
+        height: 40px;
+        border: 1px solid purple;
+      }
+      #t
+      {
+        width: 100px;
+        height: 100px;
+        border: 1px solid blue;
+      }
+      #t.dragover
+      {
+        border-width: 2px;
+      }
+    </style>
+    <script src="javascripts/jquery-1.8.0.min.js"></script>
+    <script src="javascripts/jquery.editable.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+        <table id="tb" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Story description</th>
+              <th>Point</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>User is able to click the "Login" button and navigate to Login page.</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>User is able to log into system after correctly entering name/password.</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>User is able to post.</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+  <div id="c">
+    <div id="d" draggable="true"></div>
+    <div id="t"></div>
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    var d = $("#d"), t = $("#t");
+    d[0].addEventListener("dragstart", function (e) {
+        console.log("Drag start: ");
+        console.log(e);
+        //e.dataTransfer.setData("Text", e.target.id);
+        //d.css("opacity", "0.4");
+    }, false);
+
+    t[0].addEventListener("dragover", function(e) {
+        e.preventDefault();
+    });
+    t[0].addEventListener("dragenter", function(e) {
+        //e.preventDefault();
+        console.log(e);
+    });
+    t[0].addEventListener("drop", function(e) {
+        e.preventDefault();
+    });
+    
+  </script>
+</body>
+</html> 
