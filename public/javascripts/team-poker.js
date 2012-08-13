@@ -10,20 +10,22 @@ TeamPoker.MessageType = {
     NewParticipaint: 'NewParticipaint',
     LeaveParticipaint: 'LeaveParticipaint',
     NewVoteInfo: 'NewVoteInfo',
-    ViewVoteResult: 'ViewVoteResult'
+    ViewVoteResult: 'ViewVoteResult',
+    GameStatus: 'GameStatus'
 };
 
-TeamPoker.login = function () {
-    TeamPoker.CurrentVoterName = $('#txtNickname').val();
+TeamPoker.login = function (loginName) {
+    localStorage.LoginName = TeamPoker.CurrentVoterName = loginName;
     TeamPoker.SocketClient.sendMsg("login_event", TeamPoker.CurrentVoterName);
 };
 TeamPoker.loginCallback = function(data) {
-    if(data.Success === 'true') {
+    if(data.Success === 'true')
         TeamPoker.UI.refreshParticipantsList(data.ParticipantsList);
-    }
-    else {
+    else 
         alert("Login failed! Please try again:)");
-    }
+};
+TeamPoker.onLoadGameStatus = function(data) {
+    TeamPoker.UI.refreshParticipantsList(data.ParticipantsList);
 };
 TeamPoker.newParticipantCallback = function(data) {
     TeamPoker.UI.refreshParticipantsList(data.ParticipantsList);
@@ -61,6 +63,7 @@ TeamPoker.viewVoteResultCallback = function (data) {
 }
 
 TeamPoker.SocketClient.addListener(TeamPoker.MessageType.LoginCallback, TeamPoker.loginCallback);
+TeamPoker.SocketClient.addListener(TeamPoker.MessageType.GameStatus, TeamPoker.onLoadGameStatus);
 TeamPoker.SocketClient.addListener(TeamPoker.MessageType.NewParticipant, TeamPoker.newParticipantCallback);
 TeamPoker.SocketClient.addListener(TeamPoker.MessageType.LeaveParticipaint, TeamPoker.removeFromParticipantsList);
 TeamPoker.SocketClient.addListener(TeamPoker.MessageType.ViewVoteResult, TeamPoker.viewVoteResultCallback);

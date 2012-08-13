@@ -17,7 +17,8 @@ var pid = 1
     NewParticipaint: 'NewParticipaint',
     LeaveParticipaint: 'LeaveParticipaint',
     NewVoteInfo: 'NewVoteInfo',
-    ViewVoteResult: 'ViewVoteResult'
+    ViewVoteResult: 'ViewVoteResult',
+    GameStatus: 'GameStatus'
 };
 
 app.listen(8080);
@@ -36,7 +37,7 @@ function handler (req, res) {
 
 io.sockets.on('connection', function (socket) {
     const TEAM_POKER_CHANNEL = "teampoker";
-    socket.emit(TEAM_POKER_CHANNEL , { MsgType: null, Data: {Welcome: "Welcome:)" } });
+    socket.emit(TEAM_POKER_CHANNEL , { MsgType: MessageType.GameStatus, Data: { ParticipantsList: participantsList, VoteStatus: voteStatus } });
 
     socket.on('login_event', function(loginName) {
         console.log("New participant: " + loginName.bold.underline.blue);

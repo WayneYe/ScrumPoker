@@ -1,5 +1,6 @@
 TeamPoker.UI = TeamPoker.UI || {
     ParticipantsList : $("#participants"),
+    Pointer: $("#pointer"),
     init: function (){
         $(".poker").tooltip({});
         $('.poker').hover( function () {
@@ -21,15 +22,15 @@ TeamPoker.UI = TeamPoker.UI || {
         var loginForm = $('#loginForm');
         loginForm.on("show", function() {
             $("#btnLogin").on("click", function(e) {
-                TeamPoker.CurrentPlayerName = $("#txtNickname").val();
+                var loginName = $("#txtNickname").val();
 
-                if(!TeamPoker.CurrentPlayerName) {
+                if(!loginName) {
                     $("#errNoNickname").show();
                     return;
                 }
                 else {
                     $("#errNoNickname").hide();
-                    TeamPoker.login();
+                    TeamPoker.login(loginName);
                     loginForm.modal('hide');    
                 }
             });
@@ -43,18 +44,71 @@ TeamPoker.UI = TeamPoker.UI || {
         loginForm.on("hidden", function() {  // remove the actual elements from the DOM when fully hidden
             loginForm.remove();
         });
-        loginForm.modal({                 
-            "backdrop"  : "static",
-            "keyboard"  : true,
-            "show"      : true                 
+        
+        if(!localStorage.LoginName)
+            loginForm.modal({ "backdrop" : "static", "keyboard" : true, "show" : true });
+
+        this.initStoryTable();
+        $("#btnViewResult").click(TeamPoker.viewVoteResult);
+    },
+    initStoryTable: function (storiesList) {
+        for (var story in storiesList)
+            this.addStoryRow(story);
+
+        $("#btn-add-story").click(function() {
+            TeamPoker.UI.addStoryRow();
         });
 
-        // Make story table editable
-        $("#story-table > tbody > tr > td").on("click", TeamPoker.UI.changeStoryContent);
-        $("#story-table > tbody > tr > td").on("mouseover", function (e) {
-            $(this).tooltip({ title: "CLick to edit" });
+        // jQuery has it own dragstart which is incompatible with HTML5 native DnD
+        this.Pointer[0].addEventListener("dragstart", function(e) {
+            e.dataTransfer.effectAllowed = 'move';
+            //e.dataTransfer.setData("foo", "bar");
         });
-        $("#btnViewResult").click(TeamPoker.viewVoteResult);
+    },
+    addStoryRow: function (story) {
+        var storyTableBody = document.getElementById("story-table").tBodies[0],
+            newRow = storyTableBody.insertRow(),
+            votingCell = $(newRow.insertCell()),
+            pointCell = $(newRow.insertCell()),
+            storyCell = $(newRow.insertCell());
+
+        // Appends the created new row to table and binds events, eventually simulates clicks so that user can start editing easily.
+        storyTableBody.appendChild(newRow);
+
+        if(story) {
+            storyCell.html(story.Title);
+            $(newRow).attr("story-id", story.Id);
+        }
+        else {
+            var prevStoryId = $("#story-table > tbody > tr:last").attr("story-id");
+            $(newRow).attr("story-id", prevStoryId);
+        }
+
+        this.bindEventForStoryRow(newRow);
+    },
+    bindEventForStoryRow: function(row) {
+        $([row.cells[0], row.cells[1]]).on("click", TeamPoker.UI.changeStoryContent);
+        $([row.cells[0], row.cells[1]]).on("mouseover", function () {
+            $(this).tooltip({ title: "Click to edit" });
+        });
+        $(row.cells[2]).popover({ title: "Currently Voting", content: "Drag the arrow up/down to target the story which is currently voting for." });
+        this.makeCellDraggable(row.cells[2]);
+    },
+    makeCellDraggable: function(cell, pointer) {
+        cell.addEventListener("dragover", function(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            $(this).addClass("dragover");
+        });
+        cell.addEventListener("dragleave", function(e) {
+            //e.preventDefault();
+            $(this).removeClass("dragover");
+        });
+        cell.addEventListener("drop", function(e) {
+            //console.log(e.dataTransfer.getData("foo"));
+            $(this).removeClass("dragover");
+            $(this).append(TeamPoker.UI.Pointer);
+        });
     },
     changeStoryContent: function (e) {
         var curTableCell = $(this),
@@ -68,6 +122,7 @@ TeamPoker.UI = TeamPoker.UI || {
         });
         curTableCell.html('');
         curTableCell.append(textbox);
+        textbox.focus();
     },
     showPokerbar: function () {
         $("#vote-status").hide();

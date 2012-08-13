@@ -34,23 +34,30 @@
             <tr>
               <th>Story description</th>
               <th>Point</th>
+              <th>Currently voting</th>
           </tr>
           </thead>
           <tbody>
-            <tr>
-              <td story-id="1">User is able to click the "Login" button and navigate to Login page.</td>
+            <tr story-id="1">
+              <td>User is able to click the "Login" button and navigate to Login page.</td>
               <td></td>
+              <td><div id="pointer" class="label label-info" draggable="true"> ← </div></td>
             </tr>
-            <tr>
+            <tr story-id="2">
               <td>User is able to log into system after correctly entering name/password.</td>
               <td></td>
+              <td></td>
             </tr>
-            <tr>
+            <tr story-id="3">
               <td>User is able to post.</td>
+              <td></td>
               <td></td>
             </tr>
           </tbody>
         </table>
+        <div id="add-story-wrapper">
+          <input type="button" id="btn-add-story" class="btn btn-primary" value="Add New Story">
+        </div>
       </div>
       <h2>Vote</h2>
       <div id="pokerbar-wrapper">
