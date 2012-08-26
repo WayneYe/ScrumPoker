@@ -3,162 +3,121 @@
    Written By Wayne Ye 07/20/2012 - http://wayneye.com
    */
 
-var app = require('http').createServer(handler)
-, io = require('socket.io').listen(app)
-, fs = require('fs')
+var fs = require('fs')
 , _  = require('underscore')
+, routes = require('./routes')
 , colors = require('colors');
 
-var pid = 1
-, participantsList = []
-, voteStatus = []
-, MessageType = {
-    LoginCallback: 'LoginCallback',
-    NewParticipaint: 'NewParticipaint',
-    LeaveParticipaint: 'LeaveParticipaint',
-    NewVoteInfo: 'NewVoteInfo',
-    ViewVoteResult: 'ViewVoteResult',
-    GameStatus: 'GameStatus'
+function SocketServer(app, io, roomInfo) {
+    this.App = app;
+    this.IO = io;
+    this.RoomInfo = roomInfo;
+}
+
+SocketServer.prototype = {
+    constructor: SocketServer,
+    App: null,
+    IO:  null,
+    ParticipantId: 1,
+    RoomInfo: {
+        Name: "",
+        Moderator: "",
+        ParticipantCollection : {},
+        StoryCollection : {},
+        CurrentVotingStory: 1,
+        VoteStatus : [],
+    },
+    MessageType : {
+        Connected: 'Connected',
+        LoginCallback: 'LoginCallback',
+        NewParticipant: 'NewParticipant',
+        LeaveParticipant: 'LeaveParticipant',
+        SetCurrentStory: "SetCurrentStory",
+        UpdateStoryInfo: "UpdateStoryInfo",
+        ViewVoteResult: 'ViewVoteResult',
+        Revote: 'Revote',
+        SavePoint: "SavePoint",
+        GameStatus: 'GameStatus'
+    },
+    start : function() {
+        var me = this;
+
+        if(!this.App || !this.IO)
+            throw "Cannot start socket server since App or IO is not initialized!!!";
+
+        this.IO.sockets.on('connection', function (socket) {
+            var TEAM_POKER_NAMESPACE = me.RoomInfo.Name;
+            socket.emit(TEAM_POKER_NAMESPACE , { MsgType: me.MessageType.Connected, Data: "Welcome to room: \"" + me.RoomInfo.Name + "\"!" });
+
+            socket.on('login_event', function(loginName) {
+                console.log("New participant: " + loginName.bold.underline.blue);
+                //socket.log.info("New participant: " + loginName);
+                me.RoomInfo.ParticipantCollection[me.ParticipantId] = loginName;
+                socket.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.LoginCallback, Data: { Success: "true", ParticipantInfo: { Id: me.ParticipantId, Name: loginName }, RoomInfo: me.RoomInfo } });
+                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.NewParticipant, Data: { ParticipantCollection: me.RoomInfo.ParticipantCollection } });
+
+                me.ParticipantId++;
+            });
+            socket.on('logout_event', function(id) {
+                console.log("Logout event: " + id);
+                if(_(me.RoomInfo.ParticipantCollection).has(id)) {
+                    var leftParticipantName = me.RoomInfo.ParticipantCollection[id];
+                    console.log("Left participant: " + leftParticipantName.bold.underline.cyan);
+                    socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.LeaveParticipant, Data: { Id: id } });
+
+                    delete me.RoomInfo.ParticipantCollection[id];
+                }
+            });
+
+            socket.on('set_current_story_event', function(storyId) {
+                me.RoomInfo.CurrentVotingStory = storyId;
+                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.SetCurrentStory, Data: { StoryId: storyId } });
+            });
+
+            socket.on('update_story_event', function(storyInfo) {
+                var storyId = storyInfo.Id,
+                    val     = storyInfo.Val,
+                    storyKey = _(val).keys()[0];
+
+                me.RoomInfo.StoryCollection[storyId][storyKey] = _(val).values()[0];
+                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.UpdateStoryInfo, Data: { StoryInfo: storyInfo } });
+            });
+
+            socket.on('vote_event', function(voteInfo) {
+                console.log(["New vote for story: " + voteInfo.StoryId +", by: ", voteInfo.VoterName, ", value: ", voteInfo.VoteVal.bold.cyan, "."].join(''));
+                me.RoomInfo.VoteStatus.push(voteInfo);
+            });
+
+            socket.on('revote_event', function(storyId) {
+                me.RoomInfo.StoryCollection[storyId]["Point"] = 0;
+                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.Revote, Data: { Id: storyId } });
+            });
+
+            socket.on('save_point_event', function(data) {
+                me.RoomInfo.StoryCollection[data.Id]["Point"] = data.Point;
+                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.SavePoint, Data: { Id: data.Id, Point: data.Point } });
+            });
+
+            socket.on('view_vote_result_event', function(storyId) {
+                console.log("Broadcasting vote status to all clients for storyId: " + storyId.toString().bold.underline.red);
+                console.log("Current Vote status: ");
+                console.log(_(me.RoomInfo.VoteStatus));
+                console.log("Filtered Vote status: ");
+                var filteredVotingStatus = _(me.RoomInfo.VoteStatus).filter(function (vs) { return vs.StoryId === storyId; });
+                console.log(filteredVotingStatus);
+                me.broadCastToAll(socket, TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.ViewVoteResult, Data: { VoteStatus: filteredVotingStatus } });
+            });
+        });
+
+        this.IO.sockets.on('disconnect', function (socket) {
+            //this.IO.sockets.emit(TEMM_POKET_CHANNEL, { MsgType: me.MessageType.LeaveParticipant, Data: { id: 0 } });
+            this.IO.sockets.emit('user disconnected');
+        });
+    },
+    broadCastToAll : function(socket, namespace, data) {
+        socket.emit(namespace, data);
+        socket.broadcast.emit(namespace, data);
+    }
 };
 
-app.listen(8080);
-
-function handler (req, res) {
-    fs.readFile(__dirname + '/index.html', function (err, data) {
-        if (err) {
-            res.writeHead(500);
-            return res.end('Error loading index.html');
-        }
-
-        res.writeHead(200);
-        res.end(data);
-    });
-}
-
-io.sockets.on('connection', function (socket) {
-    const TEAM_POKER_CHANNEL = "teampoker";
-    socket.emit(TEAM_POKER_CHANNEL , { MsgType: MessageType.GameStatus, Data: { ParticipantsList: participantsList, VoteStatus: voteStatus } });
-
-    socket.on('login_event', function(loginName) {
-        console.log("New participant: " + loginName.bold.underline.blue);
-        //socket.log.info("New participant: " + loginName);
-        participantsList.push({ id: pid++, name: loginName });
-        socket.emit(TEAM_POKER_CHANNEL, { MsgType: MessageType.LoginCallback, Data: { Success: "true", ParticipantsList: participantsList } });
-        socket.broadcast.emit(TEAM_POKER_CHANNEL, { MsgType: MessageType.NewParticipant, Data: { ParticipantsList: participantsList } });
-    });
-
-    socket.on('leave_participant_event', function (name) {
-        console.log("Left participant: " + name.bold.underline.yellow);
-        //socket.log.info("New participant: " + name);
-        //socket.broadcast.emit(TEAM_POKER_CHANNEL, { MsgType: MessageType.NewParticipant, Data: { id: pid, name: name } });
-    });
-
-    socket.on('vote_event', function(voteInfo) {
-        console.log(["New vote for story: " + voteInfo.StoryId +", by: ", voteInfo.VoterName, ", value: ", voteInfo.VoteVal.bold.cyan, "."].join(''));
-        //var VoteResultPair = function(voterName, voteVal, storyId) {
-            //this.VoterName = voterName;
-            //this.VoteVal = voteVal;
-            //this.StoryId = storyId;
-        //};
-        //voteStatus.push(new VoteResultPair(voteInfo.Name, voteInfo.Value, voteInfo));
-        voteStatus.push(voteInfo);
-        //socket.emit(TEAM_POKER_CHANNEL, { MsgType: MessageType.NewVoteInfo, Data: { VoterName: voteInfo.Name, Value: voteInfo.Value } });
-    });
-
-    socket.on('view_result_event', function(voteInfo) {
-        socket.emit(TEAM_POKER_CHANNEL, { MsgType: MessageType.ViewVoteResult, Data: { VoteStatus: voteStatus } });
-    });
-});
-
-io.sockets.on('disconnect', function (socket) {
-    io.sockets.emit(TEMM_POKET_CHANNEL, { MsgType: MessageType.LeaveParticipaint, Data: { id: 0 } });
-});
-/*
- *
-
- var sys = require("sys"),
- ws = require("./ws");
-
- var clients = [], players = [], voteStatus = [];
-
- ws.createServer(function (websocket) {
- websocket.addListener("connect", function (resource) {
-// emitted after handshake
-sys.debug("Client connected on path: " + resource);
-
-// # Add to our list of clients
-clients.push(websocket);
-
-//sys.debug(traverseObj(websocket));
-
-}).addListener("data", function (data) {        
-var clinetMsg = JSON.parse(data);
-
-switch (clinetMsg.Type) { 
-case MessageType.NewParticipaint:
-var newPlayer = clinetMsg.Data;
-sys.debug('New Participaint: ' + newPlayer);
-players.push(newPlayer);
-
-break;
-case MessageType.NewVoteInfo:
-var newVoteInfo = clinetMsg.Data;
-sys.debug('New VoteInfo: ' + newVoteInfo.PlayerName + ' voted ' + newVoteInfo.VoteValue);
-voteStatus.push(newVoteInfo);
-break;
-default:
-break;
-}
-
-// Notify all clients except the one just sent data
-var serverStatus = new ServerStatus();
-serverStatus.Players = players;
-serverStatus.VoteStatus = voteStatus;
-
-var srvMsgData = JSON.stringify(serverStatus);
-
-sys.debug('Broadcast server status to all clients: ' + srvMsgData);
-for(var i = 0; i < clients.length; i++)
-clients[i].write(srvMsgData);
-}).addListener("close", function () {
-// emitted when server or client closes connection
-
-for (var i = 0; i < clients.length; i++) {
-// # Remove from our connections list so we don't send
-// # to a dead socket
-if (clients[i] == websocket) {
-sys.debug("close with client: " + websocket);
-clients.splice(i);
-break;
-}
-}
-});
-}).listen(8888);
-
-var MessageType = {
-NewParticipaint: 'NewParticipaint',
-NewVoteInfo: 'NewVoteInfo'
-};
-function ClientMessage(type, data) {
-this.Type = type;
-this.Data = data;
-};
-function VoteInfo(playerName, voteValue) {
-this.PlayerName = playerName;
-this.VoteValue = voteValue;
-}
-function ServerStatus() {
-    this.Players = [];
-    this.VoteStatus = [];
-};
-
-var counter = 1;
-function sendMsgToClient(ws) {
-    sys.debug(counter + "");
-    ws.write(counter++ + "");
-    setTimeout(sendMsgToClient(ws), 1000);
-
-    if (counter == 10) return;
-}
-* 
-*/
+module.exports = SocketServer;

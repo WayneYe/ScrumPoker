@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story point team poker (An HTML5/CSS3 showcase)</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="stylesheets/bootstrap-responsive.css" type="text/css" />
+    <style type="text/css" media="screen, projection">
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./index.html">Team Poker</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="./">Room</a>
+              </li>
+              <li class="">
+                <a href="./about.html">About</a>
+              </li>
+              <li class="">
+                <a href="./feedback.html">Feedback</a>
+              </li>
+              <li class="">
+                <a href="#" id="btn-logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header>
+      <h1>Story point team poker (An HTML5 showcase)</h1>
+    </header>
+    <div class="container">
+      <h2>Stories list</h2>
+      <div id="story-list">
+        <table id="story-table" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Story description</th>
+              <th>Point</th>
+              <th>Currently voting</th>
+          </tr>
+          </thead>
+          <tbody>
+            <!--<tr story-id="1">-->
+              <!--<td></td>-->
+              <!--<td></td>-->
+              <!--<td><div id="pointer" class="label label-info" draggable="true"> ← </div></td>-->
+            <!--</tr>-->
+          </tbody>
+        </table>
+        <div id="add-story-wrapper">
+          <input type="button" id="btn-add-story" class="btn btn-primary" value="Add New Story">
+        </div>
+      </div>
+      <h2>Vote</h2>
+      <div id="pokerbar-wrapper">
+        <div id="vote-status">
+          Thank you for voting:), you voted: <span id="spVoteVal" class="badge badge-success">8</span>.
+        </div>
+      </div>
+      <div id="votebar">
+        <input id="btnViewResult" type="button" value="View Vote Result" class="btn btn-primary" />
+      </div>
+      <h2>Current participants</h2>
+      <div id="participants"></div>
+    </div>
+    <footer>
+      <hr />
+      Story Point Team Poker Developed by 
+      <br />
+      Wayne's Geek Life - <a href="http://wayneye.com">http://wayneYe.com</a>
+      <br />
+      Aug, 2012
+    </footer>
+    <script src="javascripts/vendor/jquery-1.8.0.min.js"></script>
+    <script src="javascripts/vendor/jquery.cookie.js"></script>
+    <script src="javascripts/vendor/underscore.js"></script>
+    <script src="javascripts/vendor/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/team-poker-base.js"></script>
+    <script src="javascripts/team-poker-util.js"></script>
+    <script src="javascripts/team-poker-socket-client.js"></script>
+    <script src="javascripts/ui/widgets/widget-base.js"></script>
+    <script src="javascripts/ui/widgets/popup.js"></script>
+    <script src="javascripts/ui/widgets/login-form.js"></script>
+    <script src="javascripts/ui/widgets/poker-queue.js"></script>
+    <script src="javascripts/ui/team-poker-ui.js"></script>
+    <script src="javascripts/ui/widgets/vote-result-dialog.js"></script>
+    <script src="javascripts/team-poker.js"></script>
+  </body>
+</html>

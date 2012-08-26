@@ -1,7 +1,7 @@
 body
 {
 	font-size:14px;
-	font-family: "Lucida Console", Monospace, Helvetica;
+	/*font-family: "Lucida Console", Monospace, Helvetica;*/
 }
 header
 {
@@ -23,25 +23,36 @@ footer
 	margin:0 auto;
   margin-top: 5em;
 	text-align:center;
+  font-size: 12px;
 }
-#mask
+span.ipt-err
 {
-	background-color:#333;
-	position:absolute;
-	top:0;
-	left:0;
-	text-align:center;
-	width:100%;
-	height:100%;
-	opacity:0.4;
-	z-index:200;
-  display:none;
+  color: red;
+  padding: 0 0.5em;
 }
 #loginForm
 {
 	width:500px;
 }
-#txtNickname
+#loginForm .form-row
+{
+  margin-bottom: 5px;
+}
+#loginForm input[type=text], #loginForm textarea, #loginForm label
+{
+  margin: 0;
+}
+#loginForm label
+{
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 0.8em;
+}
+#loginForm textarea
+{
+  width: 360px;
+}
+#txt-nickname
 {
 	
 }
@@ -70,6 +81,7 @@ footer
 }
 #story-table td, #story-table th
 {
+
 }
 #story-table th:first-of-type
 {
@@ -92,6 +104,7 @@ footer
 #story-table td:nth-of-type(2)
 {
   cursor: crosshair;
+  text-align: center;
 }
 #story-table td:last-of-type
 {
@@ -205,8 +218,9 @@ div#pointer
 {
   font-weight: bold;
 }
-#voteResultWrapper
+#vote-result-dialog
 {
+  min-width: 640px;
 }
 #voteResultPanel
 {
@@ -220,7 +234,7 @@ div#pointer
   height: 160px;
 	padding:10px 0;
 	overflow-x:auto;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 #estimated-story-point-wrapper {float: left}
 #txt-estimated-story-point {width: 20px;}
@@ -235,50 +249,3 @@ div#pointer
 	color:Red;
 	font-weight:bold;
 }
-#pokerbar #zero
-{
-	margin-left:10px;
-}
-#pokerbar #ahalf
-{
-	margin-left:-18px;
-}
-#pokerbar #one
-{
-	margin-left:-18px;
-}
-#pokerbar #two
-{
-	margin-left:-18px;
-}
-#pokerbar #three
-{
-	margin-left:-18px;
-}
-#pokerbar #five
-{
-	margin-left:-18px;
-}
-#pokerbar #eight
-{
-	margin-left:-18px;
-}#pokerbar #thirteen
-{
-	margin-left:-18px;
-}#pokerbar #twenty
-{
-	margin-left:-18px;
-}
-#pokerbar #forty
-{
-	margin-left:-18px;
-}
-#pokerbar #hundred
-{
-	margin-left:-18px;
-}
-#pokerbar #questionmark
-{
-	margin-left:-18px;
-}
-

@@ -2,27 +2,73 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story point team poker (An HTML5/CSS3 showcase)</title>
     <link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="stylesheets/bootstrap-responsive.css" type="text/css" />
     <style type="text/css" media="screen, projection">
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link rel="stylesheet" href="stylesheets/bootstrap-responsive.css" type="text/css" />
     <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
   </head>
   <body>
-    <div id="mask"></div>
-    <div id="loginForm" class="modal hide fade">
-      <div class="modal-header"><h3>Team Poker - Please input your name</h3></div>
-      <div class="modal-body">
-          <input id="txtNickname" type="text" placeholder="Input your name here" autofocus /><span id="errNoNickname" class="hide">Nick name is required!</span>
-      </div>
-      <div class="modal-footer">
-        <a href="#" id="btnLogin" class="btn btn-primary">Join</a>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./index.html">Team Poker</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+              <a href="./">Room</a>
+              </li>
+              <li class="">
+              <a href="./about.html">About</a>
+              </li>
+              <li class="">
+              <a href="./feedback.html">Feedback</a>
+              </li>
+              <li class="">
+              <a href="#" id="btn-logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
+    <form id="f" action="/" method="post">
+      <div id="loginForm" class="modal hide fade">
+        <div class="modal-header"><h3>Team Poker - Please input your name</h3></div>
+        <div class="modal-body">
+          <div class="form-row">
+            <label for="txt-nickname">Nick Name</label>
+            <input id="txt-nickname" name="txt-nickname" class="span2" type="text" placeholder="Input your name here" autofocus />
+            <span id="errNoNickname" class="hide">Nick name is required!</span>
+          </div>
+          <div class="form-row" id="ph-room-name">
+            <label for="txt-room-name">Room Name</label>
+            <input id="txt-room-name" name="txt-room-name" class="span2" type="text" placeholder="Input room name here" autofocus />
+            <span id="errNoRoomName" class="hide">Room name is required!</span>
+          </div>
+          <div class="form-row" id="ph-stories">
+            <label for="txt-stories">Stories</label>
+            <textarea class="input-xlarge" id="txt-stories" name="txt-stories" rows="6">
+User is able to click the "Login" button and navigate to Login page.
+User is able to log into system after correctly entering name/password.
+User is able to post.</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" id="btnLogin" class="btn btn-primary">Join</a>
+        </div>
+      </div>
+    </form>
     <header>
       <h1>Story point team poker (An HTML5 showcase)</h1>
     </header>
@@ -35,23 +81,13 @@
               <th>Story description</th>
               <th>Point</th>
               <th>Currently voting</th>
-          </tr>
+            </tr>
           </thead>
           <tbody>
             <tr story-id="1">
-              <td>User is able to click the "Login" button and navigate to Login page.</td>
+              <td></td>
               <td></td>
               <td><div id="pointer" class="label label-info" draggable="true"> ← </div></td>
-            </tr>
-            <tr story-id="2">
-              <td>User is able to log into system after correctly entering name/password.</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr story-id="3">
-              <td>User is able to post.</td>
-              <td></td>
-              <td></td>
             </tr>
           </tbody>
         </table>
@@ -84,23 +120,6 @@
       </div>
       <h2>Current participants</h2>
       <div id="participants"></div>
-      <div id="voteResultWrapper" class="modal hide fade">
-        <div class="modal-header">
-          <h3>Story point for:</h3>
-          <span id="sp-story-be-voted">dummy story</span>
-        </div>
-        <div class="modal-body">
-          <div id="voteResultPanel"></div>
-        </div>
-        <div class="modal-footer">
-          <div id="estimated-story-point-wrapper">
-            <span>Estimated Point: </span>
-            <input class="input-mini" id="txt-estimated-story-point" size="2" type="text" autofocus>
-          </div>
-          <a href="#" id="btnRevote" class="btn" data-dismiss="modal">Re-vote</a>
-          <a href="#" id="btnSavePoint" class="btn btn-primary" data-dismiss="modal">Save Point To Story</a>
-        </div>
-      </div>
     </div>
     <footer>
       <hr />
@@ -108,14 +127,12 @@
       <br />
       <a href="http://wayneye.com">http://wayneYe.com</a>
       <br />
-      June, 2011
+      Aug, 2012
     </footer>
-    <script src="javascripts/jquery-1.8.0.min.js"></script>
-    <script src="javascripts/underscore.js"></script>
-    <script src="javascripts/bootstrap.min.js"></script>
-    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
-    <script src="javascripts/team-poker-socket-client.js"></script>
-    <script src="javascripts/team-poker-ui.js"></script>
-    <script src="javascripts/team-poker.js"></script>
+    <script src="javascripts/vendor/jquery-1.8.0.min.js"></script>
+    <script src="javascripts/vendor/jquery.cookie.js"></script>
+    <script src="javascripts/vendor/underscore.js"></script>
+    <script src="javascripts/vendor/bootstrap.min.js"></script>
+    <script src="javascripts/index.js"></script>
   </body>
 </html>

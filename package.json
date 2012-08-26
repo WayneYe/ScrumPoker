@@ -1,12 +1,19 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
+  "name": "Team Poker",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node app"
   },
   "dependencies": {
     "express": "3.0.0beta6",
-    "jade": "*"
+    "jade": "*",
+    "socket.io": "*",
+    "underscore": "*",
+    "less": "*",
+    "should": "*",
+    "mocha": "*",
+    "ejs": "*",
+    "colors": "*"
   }
 }
