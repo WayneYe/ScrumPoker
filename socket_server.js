@@ -79,7 +79,12 @@ SocketServer.prototype = {
                     val     = storyInfo.Val,
                     storyKey = _(val).keys()[0];
 
-                me.RoomInfo.StoryCollection[storyId][storyKey] = _(val).values()[0];
+                if(me.RoomInfo.StoryCollection[storyId])
+                    me.RoomInfo.StoryCollection[storyId][storyKey] = _(val).values()[0];
+                else { // Create a new story
+                    me.RoomInfo.StoryCollection[storyId] = { Title: val.Title, Point: 0 };
+                }
+
                 socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.UpdateStoryInfo, Data: { StoryInfo: storyInfo } });
             });
 
@@ -90,6 +95,7 @@ SocketServer.prototype = {
 
             socket.on('revote_event', function(storyId) {
                 me.RoomInfo.StoryCollection[storyId]["Point"] = 0;
+                me.RoomInfo.VoteStatus = _(me.RoomInfo.VoteStatus).reject(function (vs) { return vs.StoryId === storyId; });
                 socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.Revote, Data: { Id: storyId } });
             });
 

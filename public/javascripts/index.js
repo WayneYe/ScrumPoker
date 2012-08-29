@@ -8,18 +8,18 @@ $(function() {
             roomName = $.trim($("#txt-room-name").val()),
             storyStr = $.trim($("#txt-stories").val());
 
-            if(!loginName) {
-                $("#errNoNickname").show();
-                return;
-            }
-            else 
-                $("#errNoNickname").hide();
             if(!roomName) {
                 $("#errNoRoomName").show();
                 return;
             }
             else
                 $("#errNoRoomName").hide();
+            if(!loginName) {
+                $("#errNoNickname").show();
+                return;
+            }
+            else 
+                $("#errNoNickname").hide();
 
 
             $.cookie("LoginName", loginName);
@@ -27,7 +27,7 @@ $(function() {
         });
     });
     loginForm.on("shown", function() {
-        $("#txt-nickname").focus();
+        $("#txt-room-name").focus();
     });
     loginForm.keydown(function (evt) {
         if (evt.keyCode == 13) $('#btnLogin').click();

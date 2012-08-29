@@ -61,11 +61,13 @@
                 me.broadcastMessage("RE-VOTE");
             });
             savePointBtn.click(function(e){
-                var storyPoint = txtStoryPoint.val();
-                if($.inArray(storyPoint, TeamPoker.Constants.POKER_VALUES) >= 0)
+                var storyPoint = $.trim(txtStoryPoint.val());
+                if(storyPoint !== '' && $.inArray(storyPoint, TeamPoker.Constants.POKER_VALUES) >= 0)
                     me.broadcastMessage("SAVE-POINT", storyPoint);
-                else
+                else {
                     spErr.show();
+                    e.preventDefault();
+                }
             });
         };
 
@@ -76,28 +78,6 @@
         this.hide = function() {
             voteResultDialog.hide(); 
         };
-
-
-      /*
-       *<div id="voteResultWrapper" class="modal hide fade">
-       *  <div class="modal-header">
-       *    <h3>Story point for:</h3>
-       *    <span id="sp-story-be-voted">dummy story</span>
-       *  </div>
-       *  <div class="modal-body">
-       *    <div id="voteResultPanel"></div>
-       *  </div>
-       *  <div class="modal-footer">
-       *    <div id="estimated-story-point-wrapper">
-       *      <span>Estimated Point: </span>
-       *      <input class="input-mini" id="txt-estimated-story-point" size="2" type="text" autofocus>
-       *    </div>
-       *    <a href="#" id="btnRevote" class="btn" data-dismiss="modal">Re-vote</a>
-       *    <a href="#" id="btnSavePoint" class="btn btn-primary" data-dismiss="modal">Save Point To Story</a>
-       *  </div>
-       *</div>
-       */
-
     }
 
     VoteResultDialog.prototype = Object.create(TeamPoker.UI.WidgetBase.prototype);

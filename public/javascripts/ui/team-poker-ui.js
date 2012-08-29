@@ -81,7 +81,7 @@ TeamPoker.UIManager = {
         }
         else {
             var prevStoryId = $("#story-table > tbody > tr:last").attr("story-id") || 0;
-            $(newRow).attr("story-id", prevStoryId + 1);
+            $(newRow).attr("story-id", parseInt(prevStoryId) + 1);
             // If the row added just now was the very first one, then append the pointer to it.
             if(prevStoryId === 0) 
                 this.setStoryPointer($(newRow.cells[2]));
@@ -126,7 +126,6 @@ TeamPoker.UIManager = {
         $(this).tooltip("hide");
         curTableCell.off("click");
         textbox.on("blur", function(evt) {
-
             var updatedVal = $(this).val();
             if(updatedVal !== oldVal) {
                 var storyKey = "";
@@ -143,12 +142,14 @@ TeamPoker.UIManager = {
         textbox.focus();
     },
     updateStoryInfo: function(storyInfo) {
-        if(storyInfo) {
+        if($("#story-table > tbody > tr[story-id="+storyInfo.Id+"]").length) { // Existing story
             if('Title' in storyInfo.Val)
-                $("#story-table > tbody > tr[story-id="+storyInfo.Id+"] > td:eq(0)").html(storyInfo.Val["Title"]);
+                $("#story-table > tbody > tr[story-id="+storyInfo.Id+"] > td:eq(0)").html(storyInfo.Val.Title);
             else if("Point" in storyInfo.Val)
-                $("#story-table > tbody > tr[story-id="+storyInfo.Id+"] > td:eq(1)").html(storyInfo.Val["Point"]);
+                $("#story-table > tbody > tr[story-id="+storyInfo.Id+"] > td:eq(1)").html(storyInfo.Val.Point);
         }
+        else
+            this.addStoryRow({ Id: storyInfo.Id, Title: storyInfo.Val.Title, Point: storyInfo.Val.Point });
     },
     refreshParticipantsList: function(participantCollection) {
         TeamPoker.UIManager.ParticipantsList.html('');
@@ -168,7 +169,7 @@ TeamPoker.UIManager = {
         console.log("Displaying vote result: ");
         console.log(voteStatus);
 
-        var currentStoryTitle = sessionStorage.getObject("RoomInfo").StoryCollection[TeamPoker.CurrentVotingStory].Title;
+        var currentStoryTitle = $("#story-table > tbody > tr[story-id="+TeamPoker.CurrentVotingStory+"] > td:eq(0)").html();
         
         this.VoteResultDialog = new TeamPoker.UI.VoteResultDialog(currentStoryTitle, voteStatus);
         this.VoteResultDialog.init();

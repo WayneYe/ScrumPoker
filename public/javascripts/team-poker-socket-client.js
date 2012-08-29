@@ -18,13 +18,13 @@ SocketClient.prototype = {
 
             if(me.Listeners[msg.MsgType] && me.Listeners[msg.MsgType].length) {
                 _(me.Listeners[msg.MsgType]).each(function (callback) {
-                    console.log("Invoking Clinet Socket callback: " + callback);
+                    //console.log("Invoking Clinet Socket callback: " + callback);
                     callback(msg.Data);
                 });
             }
             else {
-                console.warn("Unhandled Socket Server message: ");
-                console.log(msg);
+                //console.warn("Unhandled Socket Server message: ");
+                //console.log(msg);
             }
         });
     },
