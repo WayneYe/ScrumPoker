@@ -1,9 +1,12 @@
 {
-  "name": "Team Poker",
-  "version": "1.0.0",
-  "private": true,
+  "author": "Wayne Ye <admin@wayneye.com>",
+  "version": "2.0.0-4",
+  "name": "teampoker",
   "scripts": {
-    "start": "node app"
+    "start": "app.js"
+  },
+  "engines": {
+    "node": "0.8.x"
   },
   "dependencies": {
     "express": "3.0.0beta6",
@@ -15,5 +18,6 @@
     "mocha": "*",
     "ejs": "*",
     "colors": "*"
-  }
+  },
+  "subdomain": "teampoker"
 }
