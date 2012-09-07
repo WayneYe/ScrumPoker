@@ -1,7 +1,30 @@
-# Story Point Team Poker #
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+  <pre>
+================================================================================
+____________                          ________      _____       _____ 
+__  ___/_  /__________________  __    ___  __ \________(_)________  /_
+_____ \_  __/  __ \_  ___/_  / / /    __  /_/ /  __ \_  /__  __ \  __/
+____/ // /_ / /_/ /  /   _  /_/ /     _  ____// /_/ /  / _  / / / /_  
+/____/ \__/ \____//_/    _\__, /      /_/     \____//_/  /_/ /_/\__/  
+                         /____/                                       
+________                            ________      ______              
+___  __/__________ _______ ___      ___  __ \________  /______________
+__  /  _  _ \  __ `/_  __ `__ \     __  /_/ /  __ \_  //_/  _ \_  ___/
+_  /   /  __/ /_/ /_  / / / / /     _  ____// /_/ /  ,<  /  __/  /    
+/_/    \___/\__,_/ /_/ /_/ /_/      /_/     \____//_/|_| \___//_/     
+================================================================================
+  </pre>
+  <h1>Story Point Team Poker</h1>
+  <p>A realtime web application powered by nodejs and Socket.IO.</p>
 
-A realtime web application powered by nodejs and Socket.IO.
+  <h1>Online Demo Location</h1>
+  <p><a href="http://teampoker.jit.su">http://teampoker.jit.su</a></p>
 
-# Online Demo Location #
-
-http://teampoker.jit.su
+</body>
+</html>
