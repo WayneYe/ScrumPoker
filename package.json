@@ -2,6 +2,7 @@
   "author": "Wayne Ye <admin@wayneye.com>",
   "version": "2.0.0-4",
   "name": "teampoker",
+  "description": "A realtime web application powered by nodejs and Socket.IO.",
   "scripts": {
     "start": "app.js"
   },
@@ -19,5 +20,9 @@
     "ejs": "*",
     "colors": "*"
   },
-  "subdomain": "teampoker"
+  "subdomain": "teampoker",
+  "repository": {
+      "type": "git",
+      "url": "git@github.com:WayneYe/TeamPoker.git"
+  }
 }
