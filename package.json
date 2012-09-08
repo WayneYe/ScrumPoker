@@ -1,8 +1,14 @@
 {
-  "author": "Wayne Ye <admin@wayneye.com>",
-  "version": "2.0.0-4",
   "name": "teampoker",
-  "description": "A realtime web application powered by nodejs and Socket.IO.",
+  "title": "Story Point Team Poker",
+  "author": {
+    "name": "Wayne Ye",
+    "email": "admin@wayneye.com",
+    "homepage": "http://wayneye.com"
+  },
+  "homepage": "http://teampoker.jit.su",
+  "version": "2.0.0-5",
+  "description": "Story Point Team Poker - A realtime web application powered by nodejs and Socket.IO.",
   "scripts": {
     "start": "app.js"
   },
@@ -22,7 +28,13 @@
   },
   "subdomain": "teampoker",
   "repository": {
-      "type": "git",
-      "url": "git@github.com:WayneYe/TeamPoker.git"
-  }
+    "type": "git",
+    "url": "git@github.com:WayneYe/TeamPoker.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ]
 }

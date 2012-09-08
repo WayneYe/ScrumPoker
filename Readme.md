@@ -1,14 +1,5 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title></title>
-</head>
-<body>
-  <h1>Story Point Team Poker</h1>
-  <p>A realtime web application powered by nodejs and Socket.IO.</p>
+#Story Point Team Poker
+A realtime web application powered by nodejs and Socket.IO.
 
-  <h1>Online Demo Location</h1>
-  <p><a href="http://teampoker.jit.su">http://teampoker.jit.su</a></p>
-
-</body>
-</html>
+##Online Demo Location
+<http://teampoker.jit.su>

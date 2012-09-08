@@ -62,7 +62,11 @@ app.post('/', function(req, res) {
 });
 
 app.configure('development', function(){
-    app.use(express.errorHandler());
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+});
+
+app.configure('production', function(){
+    app.use(express.errorHandler()); 
 });
 
 server.listen(process.env.PORT);
