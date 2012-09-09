@@ -10,7 +10,8 @@ var express = require('express')
 , _  = require('underscore')
 , io = require('socket.io').listen(server)
 , SocketServer = require('./socket_server')
-, staticAsset = require('static-asset')
+, gzippo = require('gzippo')
+//, staticAsset = require('static-asset')
 , env = 'development';
 
 process.env.PORT = 80;
@@ -20,17 +21,19 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
-  app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(staticAsset(__dirname + "/public"));
+  app.use(express.compress());
+  //app.use(staticAsset(__dirname + "/public/javascripts"));
   //app.use(staticAsset(__dirname + "/public/stylesheets"));
-  app.use(express.static(__dirname + '/public'));
 
   this.set('env', process.env.NODE_ENV || 'development');
   env = this.get('env');
   console.log('Express booting in %s mode', env);
+
+  app.use(express.static(__dirname + '/public'));
+  //app.use(gzippo.staticGzip(__dirname + '/public'));
 });
 
 app.get('/', routes.index);
@@ -71,10 +74,12 @@ app.post('/', function(req, res) {
 });
 
 app.configure('development', function(){
+  app.use(express.logger('dev'));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
 
 app.configure('production', function(){
+  app.use(express.logger());
   app.use(express.errorHandler()); 
 });
 

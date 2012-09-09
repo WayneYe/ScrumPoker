@@ -7,7 +7,7 @@
     "homepage": "http://wayneye.com"
   },
   "homepage": "http://teampoker.jit.su",
-  "version": "2.0.0-5",
+  "version": "2.0.0-6",
   "description": "Story Point Team Poker - A realtime web application powered by nodejs and Socket.IO.",
   "scripts": {
     "start": "app.js"
@@ -16,9 +16,11 @@
     "node": "0.8.x"
   },
   "dependencies": {
+    "connect": "2.3.8",
     "express": "3.0.0beta6",
     "jade": "*",
     "static-asset": "*",
+    //"gzippo": "0.1.7",
     "socket.io": "*",
     "underscore": "*",
     "less": "*",
