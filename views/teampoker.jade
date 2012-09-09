@@ -1,0 +1,54 @@
+extends layout
+
+block styles
+  - if (env === 'development')
+    link(rel='stylesheet', href='stylesheets/style.css', type='text/css')
+  - else
+    link(rel='stylesheet', href='stylesheets/style.min.css', type='text/css')
+block content
+  .container
+    h2 Stories list
+    #story-list
+      table#story-table.table.table-striped.table-bordered
+        thead
+          tr
+            th Story description
+            th Point
+            th Currently voting
+        tbody
+      #add-story-wrapper
+        input#btn-add-story.btn.btn-primary(type='button', value='Add New Story')
+    h2 Vote
+    #pokerbar-wrapper
+      #vote-status
+        | Thank you for voting:), you voted:
+        span#spVoteVal.badge.badge-success 8
+        | .
+    #votebar
+      input#btnViewResult.btn.btn-primary(type='button', value='View Vote Result')
+    h2 Current participants
+    #participants
+block foot
+  footer
+    hr
+    | Story Point Team Poker Developed by
+    br
+    | Wayne's Geek Life -
+    a(href='http://wayneye.com') http://wayneYe.com
+    br
+    | Aug, 2012
+block scripts
+  script(src='/socket.io/socket.io.js')
+  - if (env === 'development')
+    script(src='javascripts/team-poker-base.js')
+    script(src='javascripts/team-poker-util.js')
+    script(src='javascripts/team-poker-socket-client.js')
+    script(src='javascripts/ui/widgets/widget-base.js')
+    script(src='javascripts/ui/widgets/popup.js')
+    script(src='javascripts/ui/widgets/login-form.js')
+    script(src='javascripts/ui/widgets/poker-queue.js')
+    script(src='javascripts/ui/team-poker-ui.js')
+    script(src='javascripts/ui/widgets/vote-result-dialog.js')
+    script(src='javascripts/team-poker.js')
+  - else
+    script(src='javascripts/teampoker.min.js')
