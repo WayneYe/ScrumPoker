@@ -15,6 +15,7 @@ var express = require('express')
 , env = 'development';
 
 process.env.PORT = 80;
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 app.configure(function(){
   app.set('port', process.env.PORT);
