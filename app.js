@@ -10,7 +10,7 @@ var express = require('express')
 , _  = require('underscore')
 , io = require('socket.io').listen(server)
 , SocketServer = require('./socket_server')
-, gzippo = require('gzippo')
+//, gzippo = require('gzippo')
 //, staticAsset = require('static-asset')
 , env = 'development';
 

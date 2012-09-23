@@ -35,13 +35,13 @@ module.exports = function(grunt) {
     min: {
       dist: {
         src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'public/javascripts/<%= pkg.name %>.min.js'
       },   
       css: {
         src: [
           path.join(jsPath, "style.css"),
         ],
-        dest: 'dist/<%= pkg.name %>.min.css'
+        dest: 'public/stylesheets/<%= pkg.name %>.min.css'
       }
     }, 
     lint: {
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'concat:dist min');
+  grunt.registerTask('default', 'concat:dist min cssmin');
 
   // Custom tasks
   //grunt.registerTask('css', 'concat:css, cssmin');
