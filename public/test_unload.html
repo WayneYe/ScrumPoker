@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+
+  <script type="text/javascript" charset="utf-8">
+    window.onbeforeunload = function(e) {
+      e.preventDefault();
+      if(confirm("are you sure??")) {
+        console.log("YEAH");
+      }
+
+      return false;
+    };
+  </script>
+</body>
+</html>

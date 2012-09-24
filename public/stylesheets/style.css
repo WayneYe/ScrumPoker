@@ -70,6 +70,28 @@ span.ipt-err
 {
   margin: 0 auto;
 }
+#share-link
+{
+  text-align: center;
+}
+#share-link label[for="txt-room-link"]
+{
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1em;
+  font-size: 14px;
+}
+#txt-room-link
+{
+  margin: 0;
+}
+#btn-copy-link
+{
+  margin: 0 auto;
+  display: block;
+  width: 120px;
+  margin-top: 1em;
+}
 #story-list
 {
   width: 60%;

@@ -12,6 +12,7 @@ TeamPoker.UIManager = {
         });
 
         if($.cookie("LoginName")) {
+            (new TeamPoker.UI.ShareLinkPopup()).init().show();
             TeamPoker.login($.cookie("LoginName"));
         }
         else {
@@ -212,6 +213,7 @@ $(window).on('beforeunload', function() {
 });
 
 $(window).unload(function() {
+  alert("UNLOAD!!!");
     TeamPoker.logout();
     TeamPoker.UIManager.cleanUp();
 });

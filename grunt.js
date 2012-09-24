@@ -23,6 +23,7 @@ module.exports = function(grunt) {
          path.join(jsPath, "team-poker-socket-client.js"),
          path.join(jsPath, "ui/widgets/widget-base.js"),
          path.join(jsPath, "ui/widgets/popup.js"),
+         path.join(jsPath, "ui/widgets/share-link.js"),
          path.join(jsPath, "ui/widgets/login-form.js"),
          path.join(jsPath, "ui/widgets/poker-queue.js"),
          path.join(jsPath, "ui/team-poker-ui.js"),
