@@ -2,4 +2,4 @@
 A realtime agile planning web app powered by HTML5 WebSocket and nodejs/Socket.IO.
 
 #Online Demo Location
-<http://teampoker.jit.su>
+<http://teampoker.ap01.aws.af.cm/>
