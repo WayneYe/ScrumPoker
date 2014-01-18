@@ -1,23 +1,24 @@
 {
   "name": "teampoker",
-  "title": "Story Point Team Poker",
+  "title": "Scrum Team Poker",
   "author": {
     "name": "Wayne Ye",
     "email": "admin@wayneye.com",
     "homepage": "http://wayneye.com"
   },
-  "version": "1.0.0",
-  "description": "Story Point Team Poker - A realtime web application powered by nodejs and Socket.IO.",
+  "version": "2.0.0",
+  "description": "Scrum Team Poker - A realtime web application powered by node/express and Socket.IO.",
   "scripts": {
     "start": "app.js"
   },
   "engines": {
-    "node": "0.8.x"
+    "node": "0.10.x"
   },
   "dependencies": {
-    "connect": "2.3.8",
-    "express": "3.0.0beta6",
-    "jade": "*",
+    "grunt": "0.4.2",
+    "connect": "2.12.0",
+    "express": "3.4.8",
+    "jade": "0.26.3",
     "static-asset": "*",
     "socket.io": "*",
     "underscore": "*",
@@ -26,7 +27,7 @@
     "mocha": "*",
     "ejs": "*",
     "colors": "*",
-    "gzippo": "0.1.x"
+    "gzippo": "*"
   },
   "subdomain": "teampoker",
   "repository": {
@@ -38,6 +39,10 @@
       "type": "MIT",
       "url": "http://www.opensource.org/licenses/mit-license.php"
     }
-  ]
+  ],
+  "devDependencies": {
+    "grunt-contrib-uglify": "~0.3.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.6.5"
+  }
 }
-

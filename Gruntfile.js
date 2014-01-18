@@ -6,16 +6,16 @@ module.exports = function(grunt) {
       cssPath  = "public/stylesheets",
       distPath = "dist";
 
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+
   grunt.initConfig({
-    pkg: '<json:package.json>',
-    meta: {
-      banner: '/*! <%= pkg.description %>\n* v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '* Homepage: <%= pkg.homepage + "\n" %>' +
-        '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> - <%= pkg.author.homepage %>\n' +
-        '* Licensed with <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
-    },  
+    pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
       dist: {
         src: [
          path.join(jsPath, "team-poker-base.js"),
@@ -33,48 +33,65 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
-    min: {
+    uglify: {
+      options: {
+        banner: '/* <%= pkg.description %>\n* version <%= pkg.version %> - ' +
+        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        '* Copyright (c) 2011 - <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> - <%= pkg.author.homepage %>\n' +
+        '* Licensed with <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+      },
       dist: {
-        src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-        dest: 'public/javascripts/<%= pkg.name %>.min.js'
-      },   
-      css: {
-        src: [
-          path.join(jsPath, "style.css"),
-        ],
-        dest: 'public/stylesheets/<%= pkg.name %>.min.css'
+        files: {
+          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+        }
       }
     }, 
     lint: {
       all: ['grunt.js', 'app.js', 'public/javascripts/*.js', 'public/javascripts/ui/**/*.js']
     },
-    jshint: {
-      options: {
-        browser: true
-      }
-    },
     qunit: {
       index: ['test/index.html']
     },
     jshint: {
+      all: ['Gruntfile.js', 'routes/index.js', 'public/javascripts/*.js', 'public/javascripts/ui/*.js'],
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true
-      },  
-      globals: {
-        exports: true,
-        module: false
-      }   
-    },  
-    uglify: {}
+        "boss": true,
+        "curly": true,
+        "eqeqeq": true,
+        "eqnull": true,
+        "expr": true,
+        "immed": true,
+        "noarg": true,
+        "onevar": true,
+        "quotmark": "double",
+        "smarttabs": true,
+        "trailing": true,
+        "undef": true,
+        "unused": true,
+        "node": true,
+
+        "globals": {
+          "$": true,
+          "jQuery": true,
+          "_": true,
+          "document": true,
+          "window": true,
+          "sessionStorage": true,
+          "localStorage": true,
+          "location": true,
+          "exports": true,
+          "module": false,
+          "TeamPoker": true,
+        }   
+      },
+      ignore_warning: {
+        options: {
+          '-W015': true,
+          '-W108': true,
+        },
+        src: ['**/*.js'],
+      }
+    }
   });
 
   // Load tasks from "grunt-sample" grunt plugin installed via Npm.
@@ -93,9 +110,8 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'concat:dist min cssmin');
+  grunt.registerTask('default', ['concat:dist', 'uglify', 'cssmin']);
 
   // Custom tasks
   //grunt.registerTask('css', 'concat:css, cssmin');
-
 };
