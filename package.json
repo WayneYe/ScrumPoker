@@ -20,7 +20,7 @@
     "express": "3.4.8",
     "jade": "0.26.3",
     "static-asset": "*",
-    "socket.io": "*",
+    "socket.io": "0.9.10",
     "underscore": "*",
     "less": "*",
     "should": "*",

@@ -94,9 +94,6 @@ module.exports = function(grunt) {
     }
   });
 
-  // Load tasks from "grunt-sample" grunt plugin installed via Npm.
-  //grunt.loadNpmTasks('grunt-sample');
-
   grunt.registerTask('cssmin', function() {
     grunt.log.write("Minifying css using yuicompressor \n");
     var cmd = 'java -jar -Xss2048k '

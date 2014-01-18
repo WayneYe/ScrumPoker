@@ -6,13 +6,13 @@ html(lang='en')
     meta(description='A realtime agile planning web app powered by HTML5 WebSocket and nodejs/Socket.IO.')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     block meta
-    title Story Point Team Poker
-    link(rel='stylesheet', href='stylesheets/bootstrap.min.css', type='text/css')
-    link(rel='stylesheet', href='stylesheets/bootstrap-responsive.min.css', type='text/css')
-    style(type='text/css', media='screen, projection')
-      body {
-        padding-top: 60px;
-      }
+    title Scrum Team Poker
+    link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css', type='text/css')
+    //-link(rel='stylesheet', href='stylesheets/bootstrap-responsive.min.css', type='text/css')
+    //-style(type='text/css', media='screen, projection')
+      //-body {
+        //-padding-top: 60px;
+      //-}
     block styles
 
   body
@@ -37,3 +37,15 @@ html(lang='en')
     block content
     block foot
     block scripts
+  - if(env === 'development')
+    script(src='javascripts/vendor/jquery-2.0.3.min.js')
+    script(src='javascripts/vendor/underscore.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js')
+    script(src='javascripts/vendor/jquery.cookie.js')
+    script(src='/socket.io/socket.io.js')
+  - else if(env === 'production')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.10/socket.io.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js')
