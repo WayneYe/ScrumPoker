@@ -24,7 +24,7 @@ WidgetBase.prototype = {
 
     // UI methods
     init: function (parent) {
-        parent = parent || $(window);
+        parent = parent || $(document.body);
 
         if(this.WidgetDOM) {
             parent.append(this.WidgetDOM);

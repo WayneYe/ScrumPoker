@@ -18,13 +18,6 @@ hr
   width:90%;
 	margin:5px auto;
 }
-footer
-{
-	margin:0 auto;
-  margin-top: 5em;
-	text-align:center;
-  font-size: 12px;
-}
 span.ipt-err
 {
   color: red;
@@ -32,7 +25,6 @@ span.ipt-err
 }
 #loginForm
 {
-	width:500px;
 }
 #loginForm .form-row
 {
@@ -214,6 +206,7 @@ div#pointer
     opacity:0;
     position: relative;
     margin-top: 20px;
+    margin-right: 8px;
     float:left;
 }
 .resultPoker
@@ -259,7 +252,14 @@ div#pointer
 	overflow-y:hidden;
 }
 #estimated-story-point-wrapper {float: left}
-#txt-estimated-story-point {width: 20px;}
+#txt-estimated-story-point {
+  width: 24px;
+  border-color: rgba(82,168,236,.8);
+  outline: 0;
+  outline: thin dotted \9;
+  -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
+  box-shadow: 0 0 8px rgba(82,168,236,.6);
+}
 .activePoker
 {
 	cursor:pointer;

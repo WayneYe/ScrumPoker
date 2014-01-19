@@ -10,11 +10,12 @@ var express = require('express')
 , _  = require('underscore')
 , io = require('socket.io').listen(server)
 , SocketServer = require('./socket_server')
+, path = require('path')
 //, gzippo = require('gzippo')
 //, staticAsset = require('static-asset')
 , env = 'development';
 
-process.env.PORT = 8888;
+process.env.PORT = 80;
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 app.configure(function(){
@@ -22,10 +23,13 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
-  app.use(express.bodyParser());
+  //app.use(express.bodyParser());
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.compress());
+  app.use(express.static(path.join(__dirname, 'public')));
   //app.use(staticAsset(__dirname + "/public/javascripts"));
   //app.use(staticAsset(__dirname + "/public/stylesheets"));
 

@@ -28,16 +28,8 @@ block content
       input#btnViewResult.btn.btn-primary(type='button', value='View Vote Result')
     h2 Current participants
     #participants
-block foot
-  footer
-    hr
-    | Story Point Team Poker Developed by
-    br
-    | Wayne's Geek Life -
-    a(href='http://wayneye.com') http://WayneYe.com
-    br
-    | Aug, 2012
 block scripts
+  script(src='/socket.io/socket.io.js')
   - if(env === 'development')
     script(src='javascripts/team-poker-base.js')
     script(src='javascripts/team-poker-util.js')

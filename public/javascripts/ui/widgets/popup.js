@@ -3,7 +3,7 @@ function PopUp(id, header, body, footer, classStr, backdrop) {
 
     var me = this, wrapper = null;
     this.init = function () {
-        classStr = classStr || "modal hide fade";
+        classStr = classStr || "modal fade";
         backdrop = backdrop || "static";
 
         wrapper = $("<div>").attr("id", id).attr("class", classStr);
@@ -18,15 +18,17 @@ function PopUp(id, header, body, footer, classStr, backdrop) {
                 parent.append(content);
         };
 
-        var headerWrapper = $("<div>").attr("class", "modal-header"),
-        bodyWrapper = $("<div>").attr("class", "modal-body"),
-        footerWrapper = $("<div>").attr("class", "modal-footer");
+        var 
+        modalDialog = $("<div>").attr("class", "modal-dialog"),
+        modalContent = $("<div>").attr("class", "modal-content"),
+        headerWrapper = $("<div>").attr("class", "modal-header").append(header),
+        bodyWrapper = $("<div>").attr("class", "modal-body").append(body),
+        footerWrapper = $("<div>").attr("class", "modal-footer").append(footer);
 
-        appendContent(headerWrapper, header); 
-        appendContent(bodyWrapper, body); 
-        appendContent(footerWrapper, footer); 
+        appendContent(modalContent, [headerWrapper,bodyWrapper,footerWrapper]); 
+        appendContent(modalDialog, modalContent);
+        wrapper.append(modalDialog);
 
-        wrapper.append(headerWrapper).append(bodyWrapper).append(footerWrapper);
         this.WidgetDOM = wrapper;
         this.base.init.call(this);
     };
@@ -34,32 +36,30 @@ function PopUp(id, header, body, footer, classStr, backdrop) {
 
         this.WidgetDOM.modal({
             "backdrop"  : backdrop,
-            "keyboard"  : true,
+            "keyboard"  : false,
             "show"      : true                 
         });
 
-        this.WidgetDOM.on("hidden", function() {  // remove the actual elements from the DOM when fully hidden
-            $(this).remove();
-        });
-        this.WidgetDOM.on("show", function() { 
+        this.WidgetDOM.on("show.bs.modal", function() { 
             if(me.onShow.length)
                 me.onShow.forEach(function (evtHandler) {
                     evtHandler();
                 });
         });
-        this.WidgetDOM.on("shown", function() {
+        this.WidgetDOM.on("shown.bs.modal", function() {
             if(me.onShown.length)
                 me.onShown.forEach(function (evtHandler) {
                     evtHandler();
                 });
         });
-        this.WidgetDOM.on("hide", function() {
+        this.WidgetDOM.on("hide.bs.modal", function() {
             if(me.onHide.length)
                 me.onHide.forEach(function (evtHandler) {
                     evtHandler();
                 });
         });
-        this.WidgetDOM.on("hidden", function() { 
+        this.WidgetDOM.on("hidden.bs.modal", function() { 
+            $(this).remove(); // remove the actual elements from the DOM when fully hidden
             if(me.onHidden.length)
                 me.onHidden.forEach(function (evtHandler) {
                     evtHandler();

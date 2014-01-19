@@ -1,79 +1,62 @@
-extends layout
+extends ./layout.jade
 
 block styles
-  style(type='text/css', media='screen, projection')
-    #loginForm
-    {
-      width:580px;
+  //-style(type='text/css', media='screen, projection')
+  style(type='text/css', media='screen, projection').
+    #placeholder {
+      height: 640px;
     }
-    #loginForm .form-row
-    {
-      margin-bottom: 5px;
-    }
-    #loginForm input[type=text], #loginForm textarea, #loginForm label
-    {
-      margin: 0;
-    }
-    #loginForm label
-    {
-      font-weight: bold;
-      display: inline-block;
-      margin-right: 0.8em;
-    }
-    #loginForm textarea
-    {
-      width: 360px;
-    }
-    #txt-nickname
-    {
-    }
+    //-#loginForm .form-row
+    //-{
+      //-margin-bottom: 5px;
+    //-}
+    //-#loginForm input[type=text], #loginForm textarea, #loginForm label
+    //-{
+      //-margin: 0;
+    //-}
+    //-#loginForm label
+    //-{
+      //-font-weight: bold;
+      //-display: inline-block;
+      //-margin-right: 0.8em;
+    //-}
+    //-#txt-nickname {
+    //-}
     #errNoNickname
-    {
+      {
       margin-left: 1em;
       color: red;
     }
     span.ipt-err
-    {
+      {
       color: red;
       padding: 0 0.5em;
     }
 
 block content
-  #loginForm.modal.hide.fade
-    .modal-header
-      h3 Team Poker - Creat game room!
-    .modal-body
-      form#f.form-horizontal(action='/', method='post')
-        #ph-room-name.control-group
-          label.control-label(for='txt-room-name') Room Name
-          .controls
-            input#txt-room-name.span2(name='txt-room-name', type='text', placeholder='Input room name here', autofocus='autofocus')
-            span#errNoRoomName.hide.ipt-err Room name is required!
-        #ph-stories.control-group
-          label.control-label(for='txt-stories') Stories
-          .controls
-            textarea#txt-stories.input-xlarge(name='txt-stories', rows='6')
-              | User is able to click the "Login" button and navigate to Login page.
-              | User is able to log into system after correctly entering name/password.
-              | User is able to post.
-        .control-group
-          label.control-label(for='txt-nickname') Your Nick Name
-          .controls
-            input#txt-nickname.span2(name='txt-nickname', type='text', placeholder='Input your name here', autofocus='autofocus')
-            span#errNoNickname.hide.ipt-err Nick name is required!
-    .modal-footer
-      a#btnLogin.btn.btn-primary(href='#') Join
-
+  #placeholder
+  #loginForm.modal.fade(role='dialog')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h3.modal-title Scrum Poker - Creat your team poker room!
+        .modal-body
+          form#f.form-horizontal(action='/', method='post', role='form')
+            #ph-room-name.form-group
+              label.col-sm-3.control-label(for='txt-room-name') Room Name
+              .col-sm-8
+                input#txt-room-name.form-control(name='txt-room-name', type='text', placeholder='Room name for your team', autofocus='autofocus')
+                span#errNoRoomName.hide.ipt-err Room name is required!
+            #ph-stories.form-group
+              label.col-sm-3.control-label(for='txt-stories') Stories
+              .col-sm-8
+                textarea#txt-stories.form-control(name='txt-stories', rows='6', placeholder='Paste a list of user stories here (separate by newline)')
+            .form-group
+              label.col-sm-3.control-label(for='txt-nickname') Your Nick Name
+              .col-sm-8
+                input#txt-nickname.form-control(name='txt-nickname', type='text', placeholder='Input your name here')
+                span#errNoNickname.hide.ipt-err Nick name is required!
+        .modal-footer
+          button#btnLogin.btn.btn-primary(href='#') Join
 block scripts
-  - if(env === 'development')
-    script(src='javascripts/vendor/jquery-1.8.0.min.js')
-    script(src='javascripts/vendor/underscore-min.js')
-    script(src='javascripts/vendor/bootstrap.min.js')
-    script(src='javascripts/vendor/jquery.cookie.js')
-    script(src='javascripts/index.js')
-  - else if(env === 'production')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js')
-    script(src='javascripts/vendor/jquery.cookie.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js')
-    script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js')
-    script(src='javascripts/index.js')
+  script(src='javascripts/index.js')
