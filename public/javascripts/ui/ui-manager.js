@@ -94,9 +94,6 @@ TeamPoker.UIManager = {
   },
   bindEventForStoryRow: function(row) {
     $([row.cells[0], row.cells[1]]).on("click", TeamPoker.UIManager.changeStoryContent);
-    $([row.cells[0], row.cells[1]]).on("mouseover", function () {
-      $(this).tooltip({ title: "Click to edit" });
-    });
     $(row.cells[2]).popover({ title: "Currently Voting", content: "Drag the arrow up/down to target the story which is currently voting for." });
     this.makeCellDraggable(row.cells[2]);
   },
@@ -124,7 +121,6 @@ TeamPoker.UIManager = {
     oldVal = $(this).html(),
     textbox = $("<input>").attr("type", "text").val($(this).text());
 
-    $(this).tooltip("hide");
     curTableCell.off("click");
     textbox.on("blur", function(evt) {
       var updatedVal = $(this).val();

@@ -18,6 +18,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
+         path.join(jsPath, "vendor/ZeroClipboard.min.js"),
          path.join(jsPath, "team-poker-base.js"),
          path.join(jsPath, "team-poker-util.js"),
          path.join(jsPath, "team-poker-socket-client.js"),
@@ -26,7 +27,7 @@ module.exports = function(grunt) {
          path.join(jsPath, "ui/widgets/share-link.js"),
          path.join(jsPath, "ui/widgets/login-form.js"),
          path.join(jsPath, "ui/widgets/poker-queue.js"),
-         path.join(jsPath, "ui/team-poker-ui.js"),
+         path.join(jsPath, "ui/ui-manager.js"),
          path.join(jsPath, "ui/widgets/vote-result-dialog.js"),
          path.join(jsPath, "team-poker.js")
         ],

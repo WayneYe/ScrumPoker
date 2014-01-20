@@ -25,14 +25,9 @@ $(function() {
 
       if(hasErr) return;
 
-      $.cookie("LoginName", loginName);
+      $.cookie("LoginName", $.trim(loginName.val()));
       roomForm.submit();
     });
-  });
-
-  // Binding events
-  loginForm.keydown(function (evt) {
-    if (evt.keyCode == 13) $('#btnLogin').click();
   });
 
   loginForm.modal({ "backdrop" : "static", "keyboard" : false, "show" : true });

@@ -13,9 +13,16 @@ html(lang='en')
     link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css', type='text/css')
     //-link(rel='stylesheet', href='stylesheets/bootstrap-responsive.min.css', type='text/css')
     style(type='text/css', media='screen, projection').
-      //-body {
-        //-padding-top: 60px;
-      //-}
+      html,
+      body {
+        overflow-x: hidden; /* Prevent scroll on narrow devices */
+      }
+      body {
+        padding-top: 70px;
+      }
+      footer {
+        padding: 30px 0;
+      }
       footer
       {
         margin:0 auto;

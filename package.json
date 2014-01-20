@@ -23,6 +23,7 @@
     "socket.io": "0.9.16",
     "underscore": "*",
     "less": "*",
+    "zeroclipboard": "*",
     "should": "*",
     "mocha": "*",
     "ejs": "*",
