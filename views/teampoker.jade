@@ -6,6 +6,10 @@ block styles
   - else
     link(rel='stylesheet', href='stylesheets/style.min.css', type='text/css')
 block content
+  h2 Room link
+  #room-info
+    input(type='text', readonly='readonly' id='txt-room-link').form-control
+    a(id="btn-copy", data-clipboard-target="txt-room-link").btn.btn-primary Copy
   h2 Stories list
   #story-list
     table#story-table.table.table-striped.table-bordered
@@ -28,7 +32,7 @@ block content
   h2 Current participants
   #participants
   a(href="https://github.com/WayneYe/ScrumPoker", target="_blank")
-    img(style="position: absolute; top: 50px; right: 0; border: 0;",src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png",alt="Fork me on GitHub")
+    img(style="position: absolute; top: 0; right: 0; border: 0;",src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png",alt="Fork me on GitHub")
 block scripts
   script(src='/socket.io/socket.io.js')
   - if(env === 'development')

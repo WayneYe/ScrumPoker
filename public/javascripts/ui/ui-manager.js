@@ -12,7 +12,7 @@ TeamPoker.UIManager = {
         });
 
         if($.cookie("LoginName")) {
-            (new TeamPoker.UI.ShareLinkPopup()).init().show();
+            //(new TeamPoker.UI.ShareLinkPopup()).init().show();
             TeamPoker.login($.cookie("LoginName"));
         }
         else {
@@ -34,6 +34,10 @@ TeamPoker.UIManager = {
 
     },
     loadRoomInfo : function (roomInfo){
+        $("#txt-room-link").val(location.href);
+        var zero = new ZeroClipboard($("#btn-copy"), { moviePath: 'javascripts/vendor/ZeroClipboard.swf' });
+        $(zero.htmlBridge).tooltip({title: "Copy Room Link!", placement: 'bottom'});
+
         this.initStoryTable(roomInfo);
         this.ParticipantList.init(roomInfo.ParticipantCollection);
     },
@@ -64,7 +68,7 @@ TeamPoker.UIManager = {
 
         if(this.StoryPointer) this.StoryPointer.remove();
 
-        var pointer = $("<div>").attr("id", "pointer").attr("class", "label label-info").attr("draggable","true").text(' ← ');
+        var pointer = $("<span>").attr("id", "pointer").attr("class", "glyphicon glyphicon-circle-arrow-left").attr("draggable","true");
         pointer.tooltip({ title: "Drag to change story", placement: "right", delay: { show: 200, hide: 0 } });
         // jQuery has it own dragstart which is incompatible with HTML5 native DnD
         pointer[0].addEventListener("dragstart", function(e) {
