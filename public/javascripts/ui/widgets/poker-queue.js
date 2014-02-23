@@ -1,8 +1,10 @@
 function PokerQueue() {
     TeamPoker.UI.WidgetBase.call(this);
 
+    this.voteStatus = $("#pokerbar-wrapper #vote-status");
     this.init = function() {
         var pokerBar = $("<div>").attr("id", "pokerbar"),
+        spanVotedVal = $("#pokerbar-wrapper #vote-status #spVoteVal"),
         me = this;
 
         TeamPoker.Constants.POKER_VALUES.forEach(function(val) {
@@ -18,6 +20,8 @@ function PokerQueue() {
                 $(this).tooltip("hide");
                 var votedVal = $(this).attr("vote-value");
                 pokerBar.hide();
+                spanVotedVal.text(votedVal);
+                me.voteStatus.show();
 
                 me.broadcastMessage("USER-VOTE", votedVal);
             });
@@ -31,6 +35,7 @@ function PokerQueue() {
 
     this.show = function() {
         this.base.show.call(this);
+        this.voteStatus.hide();
         $("#pokerbar > .poker").tooltip({});
     };
 }

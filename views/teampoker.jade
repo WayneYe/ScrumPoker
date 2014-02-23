@@ -20,8 +20,8 @@ block content
   h2 Vote
   #pokerbar-wrapper
     #vote-status
-      | Thank you for voting:), you voted:
-      span#spVoteVal.badge.badge-success 8
+      | Thank you for voting:), you voted: 
+      span#spVoteVal.label.label-primary
       | .
   #votebar
     input#btnViewResult.btn.btn-primary(type='button', value='View Vote Result')
@@ -41,6 +41,7 @@ block scripts
     script(src='javascripts/ui/widgets/share-link.js')
     script(src='javascripts/ui/widgets/login-form.js')
     script(src='javascripts/ui/widgets/poker-queue.js')
+    script(src='javascripts/ui/widgets/participant-list.js')
     script(src='javascripts/ui/ui-manager.js')
     script(src='javascripts/ui/widgets/vote-result-dialog.js')
     script(src='javascripts/team-poker.js')

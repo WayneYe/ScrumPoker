@@ -148,14 +148,24 @@ div#pointer
 
 #participants
 {
-  padding: 5px 20px;
+  padding-top: 20px;
   width: 60%;
   margin: 0 auto;
 }
-.participaint 
+.participant 
 {
   margin-right: 1em;
   display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-image: url('../img/await.png');
+  background-repeat: no-repeat;
+  line-height: 148px;
+  font-weight: bold;
+}
+.participant.voted 
+{
+  background-image: url('../img/voted.png');
 }
 #votebar
 {
@@ -179,6 +189,9 @@ div#pointer
 	vertical-align:middle;
 }
 #vote-status{display: none;}
+#vote-status #spVoteVal {
+  padding-top: 4px;
+}
 .poker
 {
 	-moz-border-radius: 5px;

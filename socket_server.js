@@ -4,9 +4,9 @@
    */
 
 var fs = require('fs')
-, _  = require('underscore')
-, routes = require('./routes')
-, colors = require('colors');
+    , _  = require('underscore')
+    , routes = require('./routes')
+    , colors = require('colors');
 
 function SocketServer(app, io, roomInfo) {
     this.App = app;
@@ -32,6 +32,7 @@ SocketServer.prototype = {
         LoginCallback: 'LoginCallback',
         NewParticipant: 'NewParticipant',
         LeaveParticipant: 'LeaveParticipant',
+        ParticipantVoted: 'ParticipantVoted',
         SetCurrentStory: "SetCurrentStory",
         UpdateStoryInfo: "UpdateStoryInfo",
         ViewVoteResult: 'ViewVoteResult',
@@ -54,7 +55,7 @@ SocketServer.prototype = {
                 //socket.log.info("New participant: " + loginName);
                 me.RoomInfo.ParticipantCollection[me.ParticipantId] = loginName;
                 socket.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.LoginCallback, Data: { Success: "true", ParticipantInfo: { Id: me.ParticipantId, Name: loginName }, RoomInfo: me.RoomInfo } });
-                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.NewParticipant, Data: { ParticipantCollection: me.RoomInfo.ParticipantCollection } });
+                socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.NewParticipant, Data: { Id: me.ParticipantId, Name: loginName } });
 
                 me.ParticipantId++;
             });
@@ -66,6 +67,9 @@ SocketServer.prototype = {
                     socket.broadcast.emit(TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.LeaveParticipant, Data: { Id: id } });
 
                     delete me.RoomInfo.ParticipantCollection[id];
+                    me.RoomInfo.VoteStatus = _.filter(me.RoomInfo.VoteStatus, function(voteInfo) {
+                        return voteInfo.VoterId === id;
+                    });
                 }
             });
 
@@ -76,8 +80,8 @@ SocketServer.prototype = {
 
             socket.on('update_story_event', function(storyInfo) {
                 var storyId = storyInfo.Id,
-                    val     = storyInfo.Val,
-                    storyKey = _(val).keys()[0];
+                val     = storyInfo.Val,
+                storyKey = _(val).keys()[0];
 
                 if(me.RoomInfo.StoryCollection[storyId])
                     me.RoomInfo.StoryCollection[storyId][storyKey] = _(val).values()[0];
@@ -91,6 +95,7 @@ SocketServer.prototype = {
             socket.on('vote_event', function(voteInfo) {
                 console.log(["New vote for story: " + voteInfo.StoryId +", by: ", voteInfo.VoterName, ", value: ", voteInfo.VoteVal.bold.cyan, "."].join(''));
                 me.RoomInfo.VoteStatus.push(voteInfo);
+                me.broadCastToAll(socket, TEAM_POKER_NAMESPACE, { MsgType: me.MessageType.ParticipantVoted, Data: { VoterId: voteInfo.VoterId } });
             });
 
             socket.on('revote_event', function(storyId) {
