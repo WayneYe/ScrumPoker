@@ -47,9 +47,9 @@ app.get('/', routes.index);
                               //req.assetFingerprint("/javascripts/vendor/jquery-1.8.0.min.js") );
 //});
 app.post('/', function(req, res) {
-  var moderatorName   = decodeURIComponent(req.body['txt-nickname']),
-  roomName   = decodeURIComponent(req.body['txt-room-name']),
-  storiesStr = decodeURIComponent(req.body['txt-stories']);
+  var moderatorName   = req.body['txt-nickname'],
+  roomName   = req.body['txt-room-name'],
+  storiesStr = req.body['txt-stories'];
 
   var storiesCollection = {};
   if(storiesStr.length) {
@@ -64,16 +64,18 @@ app.post('/', function(req, res) {
   }
   var roomInfo = {
     Moderator: moderatorName,
-    Name: roomName,
+    Name: encodeURIComponent(roomName.replace(' ','-').replace('(','').replace(')','')),
     ParticipantCollection : {},
     StoryCollection : storiesCollection,
     VoteStatus : [],
   };
   createGameRoom(roomInfo);
+  console.log("Created new room ==============================");
+  console.log(roomInfo);
 
   res.status(302);
   res.set({
-    'Location': [req.protocol, "://", req.host, "/", roomName].join('')
+    'Location': [req.protocol, "://", req.host, "/", roomInfo.Name].join('')
   });
   res.end();
 });
