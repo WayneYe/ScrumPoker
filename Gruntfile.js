@@ -1,4 +1,5 @@
 // Refer: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
+
 module.exports = function(grunt) {
     var path     = require('path'),
     exec     = require('child_process').exec,
@@ -40,7 +41,7 @@ module.exports = function(grunt) {
                 banner: '/* <%= pkg.description %>\n* version <%= pkg.version %> - ' +
                     '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
                     '* Copyright (c) 2011 - <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> - <%= pkg.author.homepage %>\n' +
-                    '* Licensed with <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+                    '* Licensed with <%= pkg.license %> */\n',
             },
             dist: {
                 files: {
