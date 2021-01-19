@@ -15,7 +15,7 @@ describe('Array', function(){
         it("should correctly executes underscore", function() {
             var arr = _.range(0, 100, 8);
             console.log(arr); // [ 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96 ]
-            arr.should.include(8);
+            arr.should.containDeep([8]);
         });
     });
 });
