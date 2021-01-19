@@ -6,49 +6,43 @@
     "email": "admin@wayneye.com",
     "homepage": "http://wayneye.com"
   },
-  "version": "2.0.0-11",
+  "version": "3.2.0",
   "description": "Scrum Team Poker - A realtime web application powered by node/express and Socket.IO.",
   "scripts": {
     "start": "app.js",
     "test": "mocha"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "14.15.x"
   },
   "dependencies": {
-    "colors": "*",
-    "connect": "^2.12.0",
+    "colors": "^1.4.0",
+    "compression": "^1.7.4",
+    "connect": "^3.7.0",
     "ejs": ">=2.5.5",
-    "express": "^3.1.2",
-    "grunt": "^0.4.2",
-    "grunt-cli": "~0.1.13",
-    "grunt-contrib-concat": "^0.3.0",
-    "grunt-contrib-jshint": "^0.6.5",
-    "grunt-contrib-uglify": "^0.3.3",
-    "gzippo": "*",
-    "jade": "^1.2.0",
-    "less": "~1.7.0",
-    "mocha": "^1.18.2",
-    "should": "^3.1.4",
-    "socket.io": "0.9.16",
-    "static-asset": "^0.5.4",
-    "underscore": "*",
-    "zeroclipboard": "^2.0.0-beta.5"
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "less": "^4.1.0",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.0",
+    "serve-favicon": "^2.5.0",
+    "socket.io": "^3.1.0",
+    "underscore": "^1.12.0"
   },
   "subdomain": "teampoker",
   "repository": {
     "type": "git",
     "url": "git@github.com:WayneYe/TeamPoker.git"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
-    }
-  ],
+  "license": "MIT",
   "devDependencies": {
-    "grunt-contrib-uglify": "~0.3.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-jshint": "~0.6.5"
+    "grunt": "^1.3.0",
+    "grunt-cli": "^1.3.2",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^3.0.0",
+    "grunt-contrib-uglify": "^5.0.0",
+    "mocha": "^8.2.1",
+    "should": "^13.2.3"
   }
 }
